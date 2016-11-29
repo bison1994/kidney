@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webpack cube</title>
+</head>
+<style>
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	background-color: #f2f2f2;
+}
+.wrapper{
+	width:200px;height:200px;
+	position: absolute;
+	top:30%;left:0;right:0;
+	margin:0 auto;
+}
+.lg,.sm{
+	position: relative;
+	display: block;
+	transform-style:preserve-3d;
+}
+.lg{
+	width:200px;height:200px;
+	transform:rotateX(-33.5deg) rotateY(45deg);
+	transform-origin:100px 100px -100px; 
+	animation: clock 5s ease-in-out infinite;
+}
+.sm{
+	width:100px;height:100px;
+	top:-150px;left:50px;
+	transform-origin:50px 50px -50px; 
+	transform:rotateX(-33.5deg) rotateY(45deg);
+	animation: anticlock 5s ease-in-out infinite;
+}
+.lg li{
+	display: block;
+	position: absolute;
+	width:200px;height:200px;
+	background-image: radial-gradient(transparent 30%, rgba(16, 47, 91, 0.2) 100%);
+}
+.lg li.top{
+	transform:rotateX(90deg) translate3D(0px,-100px,100px);
+}
+.lg li.bottom{
+	transform:rotateX(90deg) translate3D(0px,-100px,-100px);
+}
+.lg li.left{
+	transform:rotateY(90deg) translate3D(100px,0px,-100px);
+}
+.lg li.right{
+	transform:rotateY(90deg) translate3D(100px,0px,100px);
+}
+.lg li.back{
+	transform:translate3D(0px,0px,-200px);
+}
+.lg li.floor{
+	background-image: none;
+	box-shadow: 300px 0 80px rgba(0,0,0,.3);
+	transform:rotateX(90deg) translate3D(-300px,-100px,-140px);
+}
+.sm li{
+  display: block;
+  position: absolute;
+	width:100px;height:100px;
+  background-image: radial-gradient(transparent 30%, rgba(5, 17, 53, 0.2) 100%);
+}
+.sm li.top{
+	transform:rotateX(90deg) translate3D(0px,-50px,50px);
+}
+.sm li.bottom{
+	transform:rotateX(90deg) translate3D(0px,-50px,-50px);
+}
+.sm li.left{
+	transform:rotateY(90deg) translate3D(50px,0px,-50px);
+}
+.sm li.right{
+	transform:rotateY(90deg) translate3D(50px,0px,50px);
+}
+.sm li.back{
+	transform:translate3D(0px,0px,-100px);
+}
+@keyframes clock{
+	0%{
+		transform:rotateX(-33.5deg) rotateY(45deg);
+	}
+	80%{
+		transform:rotateX(-33.5deg) rotateY(45deg);
+	}
+	100%{
+		transform:rotateX(-33.5deg) rotateY(225deg);
+	}
+}
+@keyframes anticlock{
+	0%{
+		transform:rotateX(-33.5deg) rotateY(45deg);
+	}
+	80%{
+		transform:rotateX(-33.5deg) rotateY(45deg);
+	}
+	100%{
+		transform:rotateX(-33.5deg) rotateY(-315deg);
+	}
+}
+
+</style>
+<body>
+
+	<div class="wrapper">
+		<ul class="lg">
+			<li class="top"></li>
+			<li class="bottom"></li>
+			<li class="left"></li>
+			<li class="right"></li>
+			<li class="back"></li>
+			<li class="front"></li>
+			<li class="floor"></li>
+		</ul>
+		<ul class="sm">
+			<li class="top"></li>
+			<li class="bottom"></li>
+			<li class="left"></li>
+			<li class="right"></li>
+			<li class="back"></li>
+			<li class="front"></li>
+		</ul>
+	</div>
+	
+</body>
+</html>
