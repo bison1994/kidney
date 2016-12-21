@@ -1,6 +1,7 @@
 
 $dimension:   80px;           /* 图标尺寸 */
 $size:   			5px;            /* 圆点尺寸 */
+$large:   		10px;           /* 圆点尺寸 */
 $color:       #fff;           /* 圆点颜色 */
 
 
@@ -32,7 +33,7 @@ $color:       #fff;           /* 圆点颜色 */
 			left: 0;
 		};
 		@for $i from 1 through 6 {
-		  &:nth-child(#{$i}) { animation-delay: .2s * $i; }
+		  &:nth-child(#{$i}) { animation-delay: .225s * $i; }
 		}
 	}
 }
@@ -49,19 +50,19 @@ $color:       #fff;           /* 圆点颜色 */
 	16% {
 		opacity: 1;
 		transform: rotate(0deg);
-		animation-timing-function: cubic-bezier(0.175, 0.360, 0.625, 1.000);
+		animation-timing-function: cubic-bezier(0.15, 0.618, 0.618, 1.000);
 	}
 	33% {
 		transform: rotate(180deg);
-		animation-timing-function: cubic-bezier(0.625, 0, 0.825, 0.64);
+		animation-timing-function: cubic-bezier(0.618, 0, 0.85, 0.382);
 	}
 	50% {
 		transform: rotate(360deg);
-		animation-timing-function: cubic-bezier(0.175, 0.360, 0.625, 1.000);
+		animation-timing-function: cubic-bezier(0.15, 0.618, 0.618, 1.000);
 	}
 	67% {
 		transform: rotate(540deg);
-		animation-timing-function: cubic-bezier(0.625, 0, 0.825, 0.64);
+		animation-timing-function: cubic-bezier(0.618, 0, 0.85, 0.382);
 	}
 	84% {
 		opacity: 1;
@@ -91,7 +92,7 @@ $color:       #fff;           /* 圆点颜色 */
 		right: 0;
 		margin: 0 auto;
 		transform-origin: center bottom;
-		animation: loading-tail 2s infinite forwards;
+		animation: loading-tail 1.5s infinite forwards;
 		&:before {
 			content: '';
 			display: block;
@@ -112,10 +113,63 @@ $color:       #fff;           /* 圆点颜色 */
 @keyframes loading-tail {
 	0% {
 		transform: rotate(0deg);
-		animation-timing-function: cubic-bezier(0.175, 0.360, 0.625, 1.000);
 	}
-	90% {
+	100% {
 		transform: rotate(360deg);
+	}
+}
+
+.loading-icon-atom {
+	width: $dimension;
+	height: $dimension;
+	position: relative;
+	transform-style: perspective-3d;
+	perspective: 600;
+	i {
+		border: 1px solid #777;
+		border-radius: 50%;
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		&:before {
+			content: '';
+			animation: loading-atom .8s linear infinite forwards;
+			transform-origin: center $dimension / 2 + $large / 2;
+			display: block;
+			width: $large;
+			height: $large;
+			background-color: $color;
+			border-radius: 50%;
+			position: absolute;
+			top: -$large / 2;
+			left: 50%;
+		};
+	}
+	i:nth-child(1) {
+		transform: rotateY(45deg) rotateX(45deg);
+		&:before {
+			transform: rotateY(-45deg) rotateX(45deg);
+		};
+	}
+	i:nth-child(2) {
+		transform: rotateY(45deg) rotateX(-45deg);
+		&:before {
+			transform: rotateY(45deg) rotateX(45deg);
+		};
+	}
+	i:nth-child(3) {
+		transform: rotateY(60deg);
+		&:before {
+			animation-direction: reverse;
+			transform: rotateX(-60deg);
+		};
+	}
+}
+
+@keyframes loading-atom {
+	0% {
+		transform: rotate(0deg);
 	}
 	100% {
 		transform: rotate(360deg);
