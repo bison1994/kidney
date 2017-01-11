@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Kamikaze</title>
+</head>
+<style>
+	@font-face {
+    font-family: abc;
+    src: url('src/UnidreamLED.ttf');
+	}
+	html,
+	body {
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+	body {
+		background:#222222 url(./src/space.jpg) no-repeat center / cover;
+		color: #fff;
+		-webkit-user-select: none;
+		user-select: none;
+	}
+	.score {
+		font-size: 30px;
+		font-family: abc;
+		letter-spacing: 2px;
+		padding: 20px;
+	}
+	.gameover {
+		position: absolute;
+		width: 400px;
+		height: 200px;
+		top: 0;right: 0;left: 0;bottom: 0;
+		margin: auto;
+		text-align: center;
+		display: none;
+		z-index: 9;
+	}
+	.gameover p {
+		font-size: 22px;
+		cursor: pointer;
+	}
+	h1 {
+		font-size: 60px;
+		margin-bottom: 30px;
+	}
+	.music {
+		position: absolute;
+		width: 20px;
+		height: 24px;
+		top: 24px;
+		right: 0;
+		cursor: pointer;
+		margin: 0;
+	}
+	li {
+		display: inline-block;
+		box-sizing: border-box;
+		width: 1px;
+		height: 20px;
+		background-color: #fff;
+		position: absolute;
+		bottom: 0;
+	}
+	li:nth-child(1) {
+		left: 0;
+	}
+	li:nth-child(2) {
+		left: 4px;
+	}
+	li:nth-child(3) {
+		left: 8px;
+	}
+	li:nth-child(4) {
+		left: 12px;
+	}
+	li:nth-child(5) {
+		left: 16px;
+	}
+	li:nth-child(6) {
+		left: 20px;
+	}
+	li:nth-child(7) {
+		left: 24px;
+	}
+	li:nth-child(even) {
+		animation: play 1s infinite forwards;
+	}
+	li:nth-child(odd) {
+		animation: play 1s infinite forwards;
+		animation-delay: .5s;
+	}
+	.music[status='2'] li {
+		animation-play-state: paused;
+	}
+	.bullet {
+		width: 3px;
+		height: 15px;
+		border-radius: 50%;
+		background-color: #00EA67;
+		position: absolute;
+	}
+	.plane {
+		width: 50px;
+		height: 50px;
+		position: absolute;
+		left: calc(50% - 25px);
+		bottom: 20px;
+		transition: all .3s;
+		background: url('src/plane.png') no-repeat center / 100%;
+	}
+	.enemy {
+		position: absolute;
+		width: 60px;
+		height: 60px;
+		background: url(src/enemy.png) no-repeat center / 100%;
+	}
+
+	@keyframes play {
+		0% {
+			height: 15px;
+		}
+		20% {
+			height: 20px;
+		}
+		40% {
+			height: 15px;
+		}
+		60% {
+			height: 10px;
+		}
+		80% {
+			height: 5px;
+		}
+		100% {
+			height: 10px;
+		}
+	}
+
+</style>
+<body>
+	<div class="score" id="score">000</div>
+	<ul class="music" status="2" id="music">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<div class="gameover" id="gameover">
+		<h1>GAME OVER</h1>
+		<p onclick="location.reload()">Play again</p>
+	</div>
+	<audio autobuffer autoloop loop src="src/music1.mp3" id="audio"></audio>
+
+	<div class="plane" id="plane"></div>
+	
+	<script src="/dist/bundle.js"></script>
+	<script>
+    window.onload = function () {
+    	var controls = document.getElementById('music');
+    	var audio = document.getElementById('audio');
+    	var num = Math.random() > .5 ? 1 : 2;
+
+    	audio.volume = .3;
+    	audio.src = 'src/music' +  num + '.mp3';
+
+    	controls.onclick = function () {
+    		var status = this.getAttribute('status');
+    		if (status == 2) {
+    			this.setAttribute('status', 1);
+    			audio.play();
+    		} else {
+    			this.setAttribute('status', 2);
+    			audio.pause();
+    		}
+    	}
+    }
+	</script>
+</body>
+</html>
