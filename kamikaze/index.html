@@ -40,14 +40,23 @@
 		display: none;
 		z-index: 9;
 	}
-	.gameover p {
-		font-size: 22px;
-		cursor: pointer;
-	}
 	h1 {
 		font-size: 60px;
 		margin-bottom: 30px;
 	}
+	@media (max-width: 600px) {
+		.gameover {
+			width: 360px;
+		}
+		h1 {
+			font-size: 50px;
+		}
+	}
+	.gameover p {
+		font-size: 22px;
+		cursor: pointer;
+	}
+	
 	.music {
 		position: absolute;
 		width: 20px;
@@ -119,6 +128,12 @@
 		height: 60px;
 		background: url(src/enemy.png) no-repeat center / 100%;
 	}
+	@media (max-width: 600px) {
+		.enemy {
+			width: 40px;
+			height: 40px;
+		}
+	}
 
 	@keyframes play {
 		0% {
@@ -178,6 +193,10 @@
 
     	audio.volume = .3;
     	audio.src = 'src/music' +  num + '.mp3';
+    	audio.oncanplay = function () {
+    		controls.setAttribute('status', 1);
+    		audio.play();
+    	}
 
     	controls.onclick = function () {
     		var status = this.getAttribute('status');
