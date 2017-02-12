@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script src="vue.min.js"></script>
+	<title>Vue-Tetris</title>
+</head>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	html,
+	body {
+		height: 100%;
+	}
+	section {
+		width: 400px;
+		width: 50vh;
+		height: 80%;
+		background-color: #f2f2f2;
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	i {
+		display: inline-block;
+		width: 5%;
+		height: 3.125%;
+		border: 2px solid #f2f2f2;
+	}
+	.light {
+		background-color: #00695C;
+	}
+</style>
+<body>
+	<section id="app">
+		<i v-for="i in 640" :class="{'light': heap.indexOf(i) > -1 || block.indexOf(i) > -1}"></i>
+	</section>
+
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				heap: [],
+				block: [],
+				lock: false,
+				failed: false
+			},
+			mounted () {
+				this.generate();
+				this.dropDown();
+				this.handleKeyPress();
+				this.lock = true;
+			},
+			methods: {
+				generate () {
+					var i = Math.ceil(Math.random() * 19);
+					switch (i) {
+						case 1: 
+							this.block = this.vertiStick();
+							break;
+						case 2:
+							this.block = this.horiStick();
+							break;
+						case 3:
+							this.block = this.square();
+							break;
+						case 4:
+							this.block = this.top();
+							break;
+						case 5:
+							this.block = this.left();
+							break;
+						case 6:
+							this.block = this.right();
+							break;
+						case 7:
+							this.block = this.bottom();
+							break;
+						case 8:
+							this.block = this.z1();
+							break;
+						case 9:
+							this.block = this.z2();
+							break;
+						case 10:
+							this.block = this.z3();
+							break;
+						case 11:
+							this.block = this.z4();
+							break;
+						case 12:
+							this.block = this.L1();
+							break;
+						case 13:
+							this.block = this.L2();
+							break;
+						case 14:
+							this.block = this.L3();
+							break;
+						case 15:
+							this.block = this.L4();
+							break;
+						case 16:
+							this.block = this.L5();
+							break;
+						case 17:
+							this.block = this.L6();
+							break;
+						case 18:
+							this.block = this.L7();
+							break;
+						case 19:
+							this.block = this.L8();
+							break;
+					}
+				},
+				dropDown () {
+					var arr = this.block.map((val) => {
+						return val + 20;
+					});
+					if (Math.max.apply(null, this.block) > 620 || this.isContact(arr)) {
+						while (this.block.length) {
+							this.heap.push(this.block.pop())
+						}
+						return this.lock = false;
+					}
+					this.block = arr;
+
+					// 执行一次扫除程序
+					setTimeout(() => {
+						this.swipe();
+						this.dropDown();
+					}, 400);
+				},
+				// 查重
+				isContact (arr) {
+					for (var i = 0, len = arr.length; i < len; i++) {
+						if (this.heap.indexOf(arr[i]) > -1) {
+							// 执行一次溢出检测
+							this.isFailed();
+							return true
+						}
+					}
+				},
+				isFailed () {
+					// block停下来时，如果block数组存在小于20的数，则判定为失败
+					var arr = this.block;
+					for (var i = 0; i < arr.length; i++) {
+						if (arr[i] <= 20) {
+							setTimeout(() => {
+								alert('Game Over');
+								location.reload();
+							}, 0)
+							return this.failed = true;
+						}
+					}
+				},
+				swipe () {
+					var c = [];
+					var a;
+					for (var i = 0; i < 32; i++) {
+						for (var j = 1; j <= 20; j++) {
+							a = i * 20 + j;
+							if (this.heap.indexOf(a) > -1) {
+								c.push(a);
+							}
+						}
+						if (c.length == 20) {
+							// 消除
+							for (var k = 0; k < 20; k++) {
+								var index = this.heap.indexOf(c[k]);
+								this.heap.splice(index, 1);
+							}
+							this.heap = this.heap.map((val) => {
+								if (val <= i * 20) {
+									return val + 20;
+								} else {
+									return val;
+								}
+							});
+							console.log('消除了第' + i + '行')
+						}
+						c = [];
+					}
+				},
+				moveLeft () {
+					var arr = this.block.map((val) => {
+						return val - 1;
+					});
+					if (this.isContact(arr)) return;
+					// 不可超过左边界
+					var x;
+					for (var i = 0; i < arr.length; i++) {
+						x = Math.floor(arr[i] / 20);
+						if (arr[i] <= x * 20) return;
+					}
+					this.block = arr;
+				},
+				moveRight () {
+					var arr = this.block;
+					var y;
+					for (var i = 0; i < arr.length; i++) {
+						y = arr[i] / 20;
+						// y为整数，说明已抵达最右侧
+						if (y - Math.floor(y) == 0) return;
+					}
+					arr = this.block.map((val) => {
+						return val + 1;
+					});
+					if (this.isContact(arr)) return;
+					this.block = arr;
+				},
+				moveDown () {
+					if (Math.max.apply(null, this.block) >= 620) return;
+					var arr = this.block.map((val) => {
+						return val + 20;
+					});
+					if (this.isContact(arr)) return;
+					this.block = arr;
+				},
+				handleKeyPress () {
+					document.addEventListener('keydown', (event) => {
+						if (event.keyCode == 37) {
+							this.moveLeft();
+						}
+						if (event.keyCode == 39) {
+							this.moveRight();
+						}
+						if (event.keyCode == 40) {
+							this.moveDown();
+						}
+					})
+				},
+				vertiStick () {
+					var s = Math.ceil(Math.random() * 20);
+					return [s, s - 20, s - 40, s - 60]
+				},
+				horiStick () {
+					var s = Math.ceil(Math.random() * 16);
+					return [s, s + 1, s + 2, s + 3]
+				},
+				square () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s, s + 1, s - 20, s - 19]
+				},
+				/*
+					_|_
+				*/
+				top () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s, s + 1, s + 2, s - 19]
+				},
+				/*
+					__|
+					  |
+				*/
+				left () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s - 20, s - 19, s + 1, s - 39]
+				},
+				/*
+					|__
+					|
+				*/
+				right () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s, s - 19, s - 20, s - 40]
+				},
+				/* ___
+					  |
+				*/
+				bottom () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s - 20, s - 19, s - 18, s + 1]
+				},
+				/*__
+					  |__
+				*/
+				z1 () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s - 20,s - 19, s + 1, s + 2]
+				},
+				/*   __
+					__|
+				*/
+				z2 () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s, s + 1, s - 19, s - 18]
+				},
+				/* |__
+					    |
+				*/
+				z3 () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s - 20, s - 19, s + 1, s - 40]
+				},
+				/* __|
+					|
+				*/
+				z4 () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s, s - 20, s - 19, s - 39]
+				},
+				/*|
+					|__
+				*/
+				L1 () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s, s + 1, s - 20, s - 40]
+				},
+				/*  |
+					__|
+				*/
+				L2 () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s, s + 1, s - 19, s - 39]
+				},
+				/*__
+						|
+						|
+				*/
+				L3 () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s - 40, s - 39, s - 19, s + 1]
+				},
+				/* __
+					|
+					|
+				*/
+				L4 () {
+					var s = Math.ceil(Math.random() * 19);
+					return [s, s - 20, s - 40, s - 39]
+				},
+				/*
+					|___
+				*/
+				L5 () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s, s + 1, s + 2, s - 20]
+				},
+				/*
+					___|
+				*/
+				L6 () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s, s + 1, s + 2, s - 18]
+				},
+				/* ___
+						  |
+				*/
+				L7 () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s - 20, s - 19, s - 18, s + 2]
+				},
+				/* ___
+					|
+				*/
+				L8 () {
+					var s = Math.ceil(Math.random() * 18);
+					return [s, s - 20, s - 19, s - 18]
+				}
+			},
+			watch: {
+				'lock': function (val) {
+					if (!val && !this.failed) {
+						this.generate();
+						this.dropDown();
+						this.lock = true;
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
