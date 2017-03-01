@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	html,
+	body {
+		height: 100%;
+	}
+	.mask {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		background-color: rgba(0, 0, 0, .3);
+	}
+	.calculator {
+		position: absolute;
+		width: 500px;
+		height: 80%;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		background-color: #fff;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+	.title {
+		height: 45px;
+		line-height: 45px;
+		padding-left: 10px;
+		padding-right: 10px;
+		background-color: #0D47A1;
+		color: #fff;
+	}
+	.row {
+		padding: 15px 20px 0;
+	}
+	input {
+		width: 340px;
+		height: 32px;
+		padding-left: 5px;
+		outline: none;
+		margin-left: 10px;
+		font-size: 17px;
+	}
+	.close {
+		float: right;
+		cursor: pointer;
+	}
+	.list-nav {
+		display: flex;
+		padding: 10px 20px;
+		border-top: 1px solid rgba(13, 71, 161, .3);
+		border-bottom: 1px solid rgba(13, 71, 161, .3);
+		margin-top: 20px;
+		font-size: 14px;
+	}
+	img {
+		cursor: pointer;
+	}
+	ul {
+		width: 100%;
+		padding: 0 20px 20px;
+		overflow-y: auto;
+		height: calc(100% - 180px);
+	}
+	li {
+		display: flex;
+		padding-top: 20px;
+		font-size: 14px;
+		color: #555;
+	}
+	li > div,
+	.list-nav > div {
+		flex-grow: 1;
+		width: 33.3%;
+	}
+	.interest {
+		font-size: 25px;
+		color: #F44336;
+	}
+
+	::-webkit-scrollbar {
+    width: 6px;
+	}
+	::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+    border-right: 2px solid #f5f5f5;
+	}
+</style>
+<body>
+	<div id="app">
+		<span>期　　限：</span>
+		&nbsp;&nbsp;1 年
+		<br>
+		<br>
+
+		<span>利　　率：</span>
+		<input type="number" v-model="rate"> %
+		<br>
+		<br>
+
+		<span>到期时间：</span>
+		<input type="date" v-model="expiration">
+		<br>
+
+		<img src="../img/calculator.svg" @click="show = true" width="40px">
+		
+		<div class="mask" v-if="show">
+	    <div class="calculator">
+	      <div class="title">
+	      	收益计算器
+	      	<span class="close" @click="show = false">关</span>
+	      </div>
+	      <div class="row">
+	        <span>投资金额：</span>
+	        <input type="text" v-model="vest" placeholder="请输入100的整数倍">
+	      </div>
+	      <div class="row">
+	        <span>到期利息：&nbsp;&nbsp;&nbsp;￥</span>
+	        <span class="interest">{{ interest | decimal2 }}</span>
+	      </div>
+	      <!-- 收益一览表 -->
+      	<div class="list-nav">
+    			<div>还款日期</div>
+    			<div>计息天数</div>
+    			<div>应收利息(元)</div>
+      	</div>
+      	<ul>
+      		<li v-for="val in duration">
+      			<div>{{ val.date | formatDate}}</div>
+      			<div>{{ val.days }}</div>
+      			<div>{{ vest * dayRate * val.days | decimal2}}</div>
+      		</li>
+      	</ul>
+	    </div>
+	  </div>
+	</div>
+
+	<script src="../js/vue.min.js"></script>
+	<script>
+		Vue.filter('decimal2', function (val) {
+			val = parseFloat(val);
+			return val.toFixed(2);
+		});
+
+		Vue.filter('formatDate', function (val) {
+			var date = new Date(parseInt(val));
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			month = month < 10 ? '0' + month : month;
+			var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+
+			return year + '-' + month + '-' + day
+		})
+
+		new Vue({
+			el: '#app',
+			data: {
+				show: false,
+				vest: 100,
+				rate: 10,
+				expiration: '2017-12-31'
+			},
+			methods: {
+				getDaysOfMonth: function (t) {
+					var d = new Date(t);
+					var m = d.getMonth() + 1;
+					var year = d.getFullYear();
+					if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+						return 31;
+					}
+					if (m == 2) {
+						if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) {
+							return 29;
+						} else {
+							return 28;
+						}
+					}
+					return 30;
+				}
+			},
+			computed: {
+				interest: function () {
+					var exp = (new Date(this.expiration)).getTime(); // 到期时间的时间戳
+					var t = Date.now();
+					var d = 24 * 3600 * 1000;
+					return Math.ceil((exp - t) / d) * this.vest * this.dayRate
+				},
+				duration: function () {
+					var exp = (new Date(this.expiration)).getTime(); // 到期时间的时间戳
+					var t = Date.now();
+					var d = 24 * 3600 * 1000;
+					var arr = [];
+					while (t < exp) {
+						var s = this.getDaysOfMonth(t);
+						t += d * s;
+						if (t > exp) {
+							arr.push({
+								date: exp,
+								days: Math.ceil((exp - t + d * s) / d)
+							});
+							break;
+						} else {
+							arr.push({
+								date: t,
+								days: s
+							});
+						}
+					}
+					return arr
+				},
+				dayRate: function () {
+					return this.rate / 100 / 365;
+				}
+			},
+			watch: {
+				vest: function (val) {
+					if (isNaN(this.vest)) {
+						this.vest = '';
+						return;
+					}
+				},
+				show: function (val) {
+					if (!val) {
+						this.vest = 100;
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
