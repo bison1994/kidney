@@ -125,7 +125,7 @@
 	      </div>
 	      <div class="row">
 	        <span>投资金额：</span>
-	        <input type="text" v-model="vest" placeholder="请输入100的整数倍">
+	        <input type="text" v-model="vest" placeholder="请输入100的整数倍" v-focus="show">
 	      </div>
 	      <div class="row">
 	        <span>到期利息：&nbsp;&nbsp;&nbsp;￥</span>
@@ -163,7 +163,13 @@
 			var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
 
 			return year + '-' + month + '-' + day
-		})
+		});
+
+		Vue.directive('focus', {
+			inserted: function (el, binding) {
+				el.focus();
+			}
+		});
 
 		new Vue({
 			el: '#app',
