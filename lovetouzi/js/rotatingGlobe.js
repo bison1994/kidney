@@ -31,12 +31,12 @@
 
     var current = 0;
     function bgscroll(){
-        current += 0.6;
+        current += 1;
         projection.rotate([λ(current), 0]);
         svg.selectAll("path").attr("d", path);
     }
 
-    setInterval(bgscroll, 70);  
+    setInterval(bgscroll, 60);  
          
 })();
 
