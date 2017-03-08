@@ -4,291 +4,12 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/base.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="stylesheet" type="text/css" href="css/home.css">
 	<title>爱投资</title>
 </head>
-<style>
-h1 {
-	font-size: 40px;
-}
-.large {
-	font-size: 60px;
-}
-.info-wrap {
-	width: 500px;
-	height: 500px;
-	overflow: hidden;
-	position: relative;
-	z-index: 2;
-	padding-top: 50px;
-}
-#worldmap {
-	height: 100%;
-	width: 38.2%;
-	padding-top: 20px;
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-#worldmap svg {
-	border-radius: 50%;
-}
-.content {
-	width: 1024px;
-	margin: 0 auto;
-}
-.top {
-	height: 32px;
-	line-height: 32px;
-	color: #797979;
-	background-color: #001A33;
-	position: relative;
-}
-.nav {
-	height: 80px;
-}
-.nav ul {
-	display: inline-block;
-}
-.nav li {
-	display: inline-block;
-	line-height: 85px;
-	margin: 0 20px;
-	font-size: 16px;
-	color: #001A33;
-	position: relative;
-}
-.nav li:before,
-.nav li:after {
-	content: '';
-	position: absolute;
-	bottom: 25px;
-	display: block;
-	transition: all .2s;
-	height: 2px;
-	background-color: #E03A3E;
-	width: 0;
-}
-.nav li:before {
-	right: 50%;
-}
-.nav li:after {
-	left: 50%;
-}
-.nav li:hover:before,
-.nav li:hover:after {
-	width: 50%;
-}
-.n-hover {
-	transition: all .2s;
-	cursor: pointer;
-}
-.n-hover:hover {
-	color: #ccc;
-}
-.banner {
-	height: 500px;
-	overflow: hidden;
-	position: relative;
-}
-.banner-1 .land {
-	/*fill: #4A148C;*/
-	fill: rgba(74, 20, 140, .9);
-}
-.banner-1 .cover {
-	background-color: rgba(74, 20, 140, .8);
-}
-.banner-2 .land {
-	/*fill: #E03A3E;*/
-	fill: rgba(224, 58, 62, .9);
-}
-.banner-2 .cover {
-	background-color: rgba(224, 58, 62, .8);
-}
-.banner-3 .land {
-	/*fill: #3F51B5;*/
-	fill: rgba(63, 81, 181, .9);
-}
-.banner-3 .cover {
-	background-color: rgba(63, 81, 181, .8);
-}
-.banner-4 .land {
-	/*fill: #009688;*/
-	fill: rgba(0, 150, 136, .9);
-}
-.banner-4 .cover {
-	background-color: rgba(0, 150, 136, .8);
-}
-.land {
-	transition: all 2s;
-}
-.cover {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	transition: all 2s;
-}
-.btn {
-	display: inline-block;
-	cursor: pointer;
-	border-radius: 4px;
-	border: none;
-	text-align: center;
-	color: #fff;
-}
-.btn-x {
-	width: 200px;
-	height: 44px;
-	line-height: 44px;
-}
-.purple {
-	background-color: #982149;
-}
-.blue {
-	background-color: #4127a7;
-}
-.peach {
-	background-color: #fc437a;
-}
-.banner-btn {
-	position: absolute;
-	left: 0;
-	bottom: 100px;
-}
-.sign {
-	display: inline-block;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	color: #E03A3E;
-	float: right;
-	margin-top: 20px;
-}
-#carousel-wrapper,
-#carousel figure {
-  height: 500px;
-  line-height: 500px;
-  color: #001A33;
-}
-#carousel figure:nth-of-type(1) {-webkit-transform: rotateX(0deg)   translateZ(120px);}
-#carousel figure:nth-of-type(2) {-webkit-transform: rotateX(60deg)  translateZ(120px);}
-#carousel figure:nth-of-type(3) {-webkit-transform: rotateX(120deg) translateZ(120px);}
-#carousel figure:nth-of-type(4) {-webkit-transform: rotateX(180deg) translateZ(120px);}
-#carousel figure:nth-of-type(5) {-webkit-transform: rotateX(240deg) translateZ(120px);}
-#carousel figure:nth-of-type(6) {-webkit-transform: rotateX(300deg) translateZ(120px);}
-
-#carousel[data-state="1"] figure:nth-of-type(1),
-#carousel[data-state="2"] figure:nth-of-type(2),
-#carousel[data-state="3"] figure:nth-of-type(3),
-#carousel[data-state="4"] figure:nth-of-type(4),
-#carousel[data-state="5"] figure:nth-of-type(5),
-#carousel[data-state="6"] figure:nth-of-type(6) { opacity: 1; }
-
-#carousel-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  perspective: 1100px;
-}
-
-#carousel {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 100;
-  transform-style: preserve-3d;
-  transition: all 1s;
-}
-
-#carousel figure {
-  display: block;
-  position: absolute;
-  width: 100%;
-  margin: 0;
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-  opacity: .2;
-  transition: all 1s;
-  backface-visibility: hidden;
-}
-.guide {
-	width: 100%;
-	height: 540px;
-	background-image: linear-gradient(#3F51B5 0%, #3F51B5 50%, #fff 0%);
-}
-.card-left, .card-right {
-	width: 300px;
-	height: 440px;
-	background-color: #fff;
-	z-index: 1;
-	top: 50px;
-	border: 1px solid #eee;
-	border-radius: 6px;
-	left: 50%;
-	box-shadow: 0 10px 10px -5px rgba(0, 0, 0, .3);
-}
-.card-left {
-	margin-left: -430px;
-}
-.card-right {
-	margin-left: 130px;
-}
-.card-middle {
-	width: 300px;
-	height: 480px;
-	top: 30px;
-	border: 1px solid #eee;
-	border-radius: 6px;
-	left: 50%;
-	margin-left: -150px;
-	background-color: #fff;
-	box-shadow: 0 10px 20px rgba(0, 0, 0, .3);
-	z-index: 2;
-}
-.guide-icon {
-	width: 120px;
-	height: 120px;
-	margin: 50px auto;
-	margin-bottom: 40px;
-}
-.guide h2 {
-	text-align: center;
-	font-weight: normal;
-	font-size: 24px;
-	color: #555;
-	margin-bottom: 10px;
-}
-.guide p {
-	text-align: center;
-	font-size: 14px;
-	color: #888;
-}
-.guide button {
-	display: block;
-	width: 200px;
-	height: 40px;
-	font-size: 14px;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	background-color: #fff;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	transition: all .3s;
-}
-.guide button:hover {
-	background-color: #3F51B5;
-	color: #fff;
-}
-</style>
 <body>
 
-	<div class="top">
+	<div class="top" id="top">
 		<div class="content">
 			<img src="img/phone.png" width="18px" class="mr4 mt6">
 			<span class="mr15">400-0088-100</span>
@@ -296,9 +17,17 @@ h1 {
 			<i class="fa fa-weixin mr15 n-hover"></i>
 			<i class="fa fa-download n-hover"></i>
 
-			<span class="r f13 n-hover">登录</span>
-			<span class="r mr10 f12">|</span>
-			<span class="r f13 mr10 n-hover">注册</span>
+			<div class="user" v-show="show">
+				<a href="">
+					<i class="fa fa-user mr2"></i>
+					个人中心</a>
+			</div>
+
+			<div class="dib r" v-show="!show">
+				<span class="f13 mr8 n-hover">注册</span>
+				<span class="mr8">|</span>
+				<span class="f13 n-hover" @click="show = true">登录</span>
+			</div>
 		</div>
 	</div>
 
@@ -306,11 +35,14 @@ h1 {
 		<div class="content">
 			<img src="img/logo.png" class="mt20 mr30">
 			<ul>
-				<li>
+				<li class="nav-active">
 					<a href="">首页</a>
 				</li>
 				<li>
 					<a href="">投资产品</a>
+				</li>
+				<li>
+					<a href="">交易大厅</a>
 				</li>
 				<li>
 					<a href="">安全保障</a>
@@ -321,11 +53,14 @@ h1 {
 				<li>
 					<a href="">关于我们</a>
 				</li>
+				<li>
+					<a href="">帮助中心</a>
+				</li>
 			</ul>
-			<div class="sign">
+			<!-- <div class="sign">
 				<img src="img/gift.svg" width="45px" class="vm" style="transform: rotate(-15deg)">
 				<span class="dib vm f18 animated infinite rubberBand">注册就送￥688</span>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
@@ -948,9 +683,6 @@ h1 {
 
   <div class="bottom"></div>
 
-
-<script src="js/d3.min.js"></script>
-<script src="js/topojson.min.js"></script>
 <script src="js/vue.min.js"></script>
 <script>
 	new Vue({
@@ -972,8 +704,17 @@ h1 {
 			}.bind(this), 5000)
 		}
 	});
+
+	new Vue({
+		el: '#top',
+		data: {
+			show: false
+		}
+	})
 </script>
-<script src="js/rotatingGlobe.js"></script>
+<!-- <script src="js/d3.min.js"></script>
+<script src="js/topojson.min.js"></script>
+<script src="js/rotatingGlobe.js"></script> -->
 
 </body>
 </html>
