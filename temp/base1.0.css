@@ -1,20 +1,20 @@
 /* basic reset */
 *, *:before, *:after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 html,
 body {
-	height: 100%;
-	-webkit-font-smoothing: antialiased;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 a {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
   background-color: transparent;
 }
 a:active,
@@ -24,18 +24,18 @@ a:hover {
 }
 ul, 
 ol {
-	list-style-type: none;
+  list-style-type: none;
 }
 input,
 button,
 select,
 textarea {
-	outline: none;
-	font-family: inherit;
-	font-size: 100%;
+  outline: none;
+  font-family: inherit;
+  font-size: 100%;
 }
 select {
-	-webkit-appearance: none;
+  -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
@@ -56,7 +56,7 @@ video {
   max-width: 100%;
 }
 img {
-	border-style: none;
+  border-style: none;
   width: auto\9; /* 修正 IE8 图片消失bug */
 }
 label {
@@ -116,7 +116,7 @@ label {
 }
 /* 禁止选择文字 */
 .none-select {
-	user-select: none;
+  user-select: none;
 }
 
 .flex {
