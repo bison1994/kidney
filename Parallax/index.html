@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-2.1.4.min.js"></script>
+</head>
+<style>
+*{
+	padding:0;
+	margin:0;
+}
+body{
+	height:720px;
+}
+
+/* 必要的样式设置，数字不可改 */
+#parallaxContainer{
+	width:100%;
+	height:100%;
+	position: relative;
+	overflow: hidden;
+}
+#parallaxContainer div.parallaxItem{
+	width:120%;
+	height:120%;
+	position: absolute;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position:center;
+	top:-10%;
+	left:-10%;
+}	
+</style>
+
+<body>
+
+	<div id="parallaxContainer">
+		<div class="parallaxItem" style="background-image:url(1.jpg)"></div>
+		<div class="parallaxItem" style="background-image:url(2.png)"></div>
+	</div>
+
+<script src="parallax.js"></script>
+<script>
+
+	var para = new parallax();
+	para.ini({
+		offsetdegree:[5,3],
+		derection:[true,false]
+	});	
+	
+</script>	
+</body>
+</html>

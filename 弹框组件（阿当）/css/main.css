@@ -1,0 +1,125 @@
+*{
+	margin:0;
+	padding:0;
+}
+/*-- 弹窗基本样式 --*/
+div.popUpBoxBase{
+	position: fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color: rgba(0,0,0,.3);
+	display: none;
+	z-index: 999;
+}
+div.popUpBoxBase .popUpBox{
+	background-color: #fff;
+	border-radius: 5px;
+	position: absolute;
+	right:0;
+	left:0;
+	margin:auto;
+	top:100px;
+	box-shadow: 0 0 10px #999;
+}
+div.popUpBoxBase .titleofbox{
+	height:46px;
+	line-height: 46px;
+	background-color: #f2f2f2;
+	padding-left:20px;	
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+div.popUpBoxBase .bodyofbox{
+	width:100%;
+	position: relative;
+}
+div.popUpBoxBase .contentwrap{
+	position: absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	margin:auto;
+	height:100px;
+	line-height: 100px;
+	width:280px; 
+}
+div.popUpBoxBase .contentwrap p{
+	height: 20px;
+	line-height: 20px; 
+	position: absolute;
+	top:0;
+	bottom: 0;
+	margin:auto 0;
+}
+div.popUpBoxBase .iconofbox{
+	display: inline-block;
+	width:44px;
+	height:44px;
+	line-height: 44px;
+	border-radius: 50%;
+	text-align: center;	
+	background-color:#ff4444;
+	color:#fff;
+    margin-right:15px;
+}
+div.popUpBoxBase .contentofbox{
+	display: inline-block;
+	width:240px;
+}
+div.popUpBoxBase .footerofbox{
+	position: absolute;
+	bottom:0;
+	width:100%;
+	height:56px;
+	border-top:1px solid #eee;
+	background-color: #f2f2f2;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+div.popUpBoxBase input{
+	padding:8px 20px;
+	background-color: #a2a3a4;
+	border-radius: 3px;
+	position: absolute;
+	top:11px;
+	right:20px;
+	color:#f2f2f2;
+	border:none;
+	transition:all .3s;
+	-o-transition:all .3s;
+	-moz-transition:all .3s;
+	-ms-transition:all .3s;
+	cursor: pointer;
+	font-size: 13px;
+}
+div.popUpBoxBase input.confirm{
+	background-color: #05668d;
+	right:95px;
+}
+div.popUpBoxBase input.confirm:hover{
+	background-color: #003459;
+}
+div.popUpBoxBase input.cancel:hover{
+	background-color: #777;
+}
+
+div.successBox{
+	width:240px;
+	height:120px;
+	line-height: 120px;
+	text-align: center;
+	background-color: rgba(48,54,110,.5);
+	font-size: 20px;
+	border-radius: 4px;
+	position: fixed;
+	right:0;
+	left:0;
+	margin:auto;
+	top:100px;
+	opacity:0;
+	color:#fff;
+	z-index: 10;
+}
