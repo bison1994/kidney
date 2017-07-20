@@ -4,81 +4,27 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>爱投资2017上半年年报</title>
-	<link rel="stylesheet" type="text/css" href="/kidney/report/main_b558ad7.css">
+	<link rel="stylesheet" type="text/css" href="/kidney/report/main_05d4d05.css">
   <script>
     // 屏幕宽度大于一定值，跳转到 PC 版
 
     // 设置 rem
-    // (function() {
-    //   var w = window.innerWidth;
-    //   var html = document.querySelector('html');
-    //   if (w > 400) {
-    //     html.style.fontSize = '15px';
-    //   } else if (w <= 400 && w > 350) {
-    //     html.style.fontSize = '14px';
-    //   } else {
-    //     html.style.fontSize = '12px';
-    //   }
-    // })();
+    (function() {
+      var html = document.documentElement;
+      var w = html.getBoundingClientRect().width;
+      if (w > 400) {
+        html.style.fontSize = '15px';
+      } else if (w <= 400 && w > 340) {
+        html.style.fontSize = '14px';
+      } else {
+        html.style.fontSize = '12px';
+      }
+    })();
   </script>
 </head>
 <body ontouchstart="">
 
-	<div class="holder" flex>
-	<div class="hd pt60 js-index-0 drop-down" status="0">
-		<img src="/kidney/report/assets/logo.png" class="logo">
-		<h1 class="pt15">2017 爱投资上半年年报</h1>
-		<p class="pt10 page-0-date">2017.01.01 - 2017.06.30</p>
-	</div>
-	
-	<div class="bd js-index-0" status="0" style="padding: 0; height: 57%">
-		<div class="page-0-wrap animate-normal">
-			<div class="page-0-graph">
-				<img class="page-0-icon-1 drop-down-delay" width="24px" src="/kidney/report/assets/cover-icon-1.png">
-				<img class="page-0-icon-2 drop-down-delay" width="30px" src="/kidney/report/assets/cover-icon-2.png">
-				<span class="page-0-icon-3 drop-down-delay">DATA</span>
-				<span class="page-0-icon-4 drop-down-delay">DATA</span>
-
-				<svg width="360" height="200" xmlns="http://www.w3.org/2000/svg">
-					<!-- 阴影 -->
-					<path class="page-0-animate" d="M 0 160 Q 68 50 130 138 Q 168 185 198 122 Q 285 -20 360 140" fill="none" stroke="url(#gra-page-0-3)" stroke-width="1px" filter="url(#blur-page-0)" />
-					<!-- 黄线 -->
-					<path class="page-0-animate" d="M 0 130 Q 55 70 110 130 Q 154 175 198 122 Q 280 40 360 140" fill="none" stroke="url(#gra-page-0-2)" stroke-width="1px" />
-					<!-- 白线 -->
-					<path class="page-0-animate" d="M 0 160 Q 68 10 138 138 Q 168 185 198 122 Q 285 -65 360 140" fill="none" stroke="url(#gra-page-0-1)" stroke-width="2px" />
-
-					<circle class="p0-dot page-0-expand" cx="112" cy="100" r="5" stroke-width="2px" stroke="#fff" fill="#4875e7" />
-					<circle class="p0-dot page-0-expand" cx="290" cy="35" r="5" stroke-width="2px" stroke="#fff" fill="#4875e7"/>
-
-					<defs>
-	          <linearGradient id="gra-page-0-1" x1="0%" y1="0%" x2="100%" y2="0%">
-	            <stop offset="0%"   stop-color="rgba(255, 255, 255, 0)"/>
-	            <stop offset="10%"  stop-color="#fff"/>
-	            <stop offset="90%"  stop-color="#fff"/>
-	            <stop offset="100%" stop-color="rgba(255, 255, 255, 0)"/>
-	          </linearGradient>
-	          <linearGradient id="gra-page-0-2" x1="0%" y1="0%" x2="100%" y2="0%">
-	            <stop offset="0%"   stop-color="rgba(245, 173, 32, 0)"/>
-	            <stop offset="10%"  stop-color="#f5ad20"/>
-	            <stop offset="90%"  stop-color="#f5ad20"/>
-	            <stop offset="100%" stop-color="rgba(245, 173, 32, 0)"/>
-	          </linearGradient>
-	          <linearGradient id="gra-page-0-3" x1="0%" y1="0%" x2="100%" y2="0%">
-	            <stop offset="0%"   stop-color="rgba(4, 39, 127, 0)"/>
-	            <stop offset="10%"  stop-color="#06297f"/>
-	            <stop offset="90%"  stop-color="#06297f"/>
-	            <stop offset="100%" stop-color="rgba(4, 39, 127, 0)"/>
-	          </linearGradient>
-	          <filter id="blur-page-0" x="-2" y="-2" width="320" height="320">  
-				      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />  
-				    </filter> 
-	        </defs>
-				</svg>
-			</div>
-		</div>
-	</div>
-	<div class="ft ft-5x js-index-0"></div>
-</div>
+	<!-- <link rel="import" href="components/0.html?__inline"> -->
 	<div class="holder pt10" flex>
 	<div class="hd hd-1-2 js-index-1 pt40" status="-1">
 		<div class="hd-wrap">
@@ -991,16 +937,15 @@
 	<div class="hd hd-13 js-index-13" status="-1">
 		<div class="hd-wrap page-13-hd">
 			<h3 class="tc">合规发展</h3>
-			<p class="f14 pt4" style="line-height: 1.2">　　2017年是爱投资成立4周年，2017年是P2P网贷行业更合规的一年，也是爱投资转型升级拥抱合规的一年，2017年上半年我们与新网银行签订银行存管协议，逐步上线小额标的，合规化进一步加强。</p>
+			<p class="pt4 p13-hd">　　2017年是爱投资成立4周年，也是爱投资转型升级拥抱合规的一年，2017年上半年我们与新网银行签订银行存管协议，逐步上线小额标的，合规化进一步加强。</p>
 		</div>
 	</div>
-	<div class="bd js-index-13" status="-1" id="13" flag="0" style="height: 65%">
+	<div class="bd js-index-13" status="-1" id="13" flag="0" style="height: 74%">
 		<div class="card-paper animate-normal pt10 pb10">
-			<div class="page-13-content" id="page-13-content" data-location="1">
-				<div class="p13-list-wrap" id="page-13-list">
-					<p class="page-13-title">合规化进程</p>
-					<ul class="gray page-13-list">
-						<li class="page-13-list-line"></li>
+			<div class="page-13-content" flex dir-col>
+				<div class="page-13-title">合规化进程</div>
+				<div class="p13-list-wrap">
+					<ul class="gray page-13-list" flex dir-col>
 						<li class="p13-one-line">
 							<div class="page-13-list-l list-13-dot list-dot-1">
 								<img src="/kidney/report/assets/list-dot.png" width="24px" class="verti-align">
@@ -1065,6 +1010,7 @@
 							</div>
 						</li>
 					</ul>
+					<div class="p13-list-line"></div>
 				</div>
 			</div>
 		</div>
@@ -1180,85 +1126,85 @@
 	<div class="hd hd-15 js-index-15 pt15" status="-1">
 		<h3 class="hd-wrap">半年回顾</h3>
 	</div>
-	<div class="bd js-index-15" status="-1" id="15" flag="0" style="height: 84%">
+	<div class="bd js-index-15" status="0" id="15" flag="1" style="height: 84%">
 		<div class="card-paper animate-normal pt10 pb10">
 			<div class="gray f14 page-13-content" id="page-15-content" data-location="1">
-				<ul class="page-15-list" id="page-15-list">
-					<li class="page-15-list-line"></li>
-					<li class="one-line">
+				<div class="p15-list-line"></div>
+				<ul class="page-15-list" id="page-15-list" flex dir-col>
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-1">1</div>
 						</div>
 						<div class="page-15-list-r list-text-1">获评"2016互联网金融责任企业十强"</div>
 					</li>
-					<li class="two-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-2">2</div>
 						</div>
-						<div class="page-15-list-r list-text-2">PC版网站全新上线，用户体验和服务细节<br>全面提升</div>
+						<div class="page-15-list-r list-text-2">PC版网站全新上线,用户体验全面提升</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-3">3</div>
 						</div>
-						<div class="page-15-list-r list-text-3">庆贺新春，"吉鸡如意令"活动全线开启</div>
+						<div class="page-15-list-r list-text-3">庆贺新春,"吉鸡如意令"活动全线开启</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-4">4</div>
 						</div>
-						<div class="page-15-list-r list-text-4">"春游送红包"活动，给爱亲专属红包福利</div>
+						<div class="page-15-list-r list-text-4">"春游送红包"活动,给爱亲专属红包福利</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-5">5</div>
 						</div>
 						<div class="page-15-list-r list-text-5">中国互联网金融协会向爱投资颁发会员证书</div>
 					</li>
-					<li class="two-line">
+					<li>
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-6">6</div>
 						</div>
 						<div class="page-15-list-r list-text-6 flex-align" flex>
-							<p>成立iSAFE公益项目，提升社会对儿童安全问题的关注</p>
+							<p>成立iSAFE儿童安全公益项目,彰显企业社会责任</p>
 						</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-7">7</div>
 						</div>
-						<div class="page-15-list-r list-text-7">庆成立四周年，邀爱亲参加"爱江湖账单记"活动</div>
+						<div class="page-15-list-r list-text-7">庆成立四周年,邀爱亲参加"爱江湖账单记"活动</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-8">8</div>
 						</div>
 						<div class="page-15-list-r list-text-8">发布高端理财品牌"安见资本"</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-9">9</div>
 						</div>
 						<div class="page-15-list-r list-text-9">与新网银行签订银行存管协议</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-10">10</div>
 						</div>
-						<div class="page-15-list-r list-text-10">"朋友圈集油"活动，送好友现金红包</div>
+						<div class="page-15-list-r list-text-10">"朋友圈集油"活动,送好友现金红包</div>
 					</li>
-					<li class="one-line">
+					<li class="nowrap">
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-11">11</div>
 						</div>
-						<div class="page-15-list-r list-text-11">"端午相约，粽香浓情"活动，送爱亲888元红包</div>
+						<div class="page-15-list-r list-text-11">"端午相约,粽香浓情"活动,送爱亲888元红包</div>
 					</li>
-					<li class="two-line">
+					<li>
 						<div class="page-15-list-l">
 							<div class="page-15-dot verti-align list-dot-12">12</div>
 						</div>
 						<div class="page-15-list-r list-text-12 flex-align" flex>
-							<p>庆祝累计交易额突破300亿，举行"感恩回馈，亿路有你"活动</p>
+							<p>庆祝累计交易额突破300亿,举行"感恩回馈,亿路有你"活动</p>
 						</div>
 					</li>
 				</ul>
@@ -1291,7 +1237,7 @@
 		<li></li>
 	</ul>
 
-	<script src="/kidney/report/main_1fb64a8.js"></script>
+	<script src="/kidney/report/main_65255f4.js"></script>
 	<!-- http://confluence.itouzi.com/pages/viewpage.action?pageId=13927074 -->
   <!-- <script src="/public/static_res/js/h5/app-bridge.js"></script> -->
   <script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
