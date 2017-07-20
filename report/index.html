@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>爱投资2017上半年年报</title>
-	<link rel="stylesheet" type="text/css" href="/kidney/report/main_fcdcccb.css">
+	<link rel="stylesheet" type="text/css" href="/kidney/report/main_4abaa87.css">
 </head>
 <script>
 	// 屏幕宽度大于一定值，跳转到 PC 版
@@ -258,7 +258,7 @@
 						<!-- 曲线图 -->
 						<div class="p3-graph-wrap">
 							<div class="page-3-graph-pic page-3-show">
-								<img data-src="/kidney/report/assets/graph-1.png" width="284px">
+								<img data-src="/kidney/report/assets/graph-1.png" width="284px" height="100%">
 							</div>
 						</div>
 
@@ -363,9 +363,9 @@
 						</div>
 						
 						<!-- 曲线图 -->
-						<div class="p3-graph-wrap">
+						<div class="p4-graph-wrap">
 							<div class="page-4-graph-pic page-3-show">
-								<img data-src="/kidney/report/assets/graph-2.png" width="284px">
+								<img data-src="/kidney/report/assets/graph-2.png" width="284px" height="100%">
 							</div>
 						</div>
 
@@ -1268,16 +1268,16 @@
 		<li></li>
 	</ul>
 
-	<script src="/kidney/report/main_be501e9.js"></script>
+	<script src="/kidney/report/main_2772511.js"></script>
 	<!-- http://confluence.itouzi.com/pages/viewpage.action?pageId=13927074 -->
   <!-- <script src="/public/static_res/js/h5/app-bridge.js"></script> -->
-  <!-- <script src="/public/static_res/js/h5/zepto.min.js"></script> -->
   <script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
   <script>
     (function () {
       var btn = document.getElementById('share');
       var ua = navigator.userAgent;
       var url = window.location.href;
+      var sign = '';
                       
       // 判断机型，如果是iphone，转码；安卓不转
       if (ua.indexOf('iPhone') > -1) {
@@ -1291,6 +1291,16 @@
         btn.onclick = appshare;
       } else {
         btn.style.display = "none";
+      }
+
+      // 判断 url 中是否带有 sign 参数，如有则发送回流统计
+      var search = window.location.search.substr(1).split('&');
+      for (var i = 0; i < search.length; i++) {
+        if (search[i].indexOf('sign') > -1) {
+          sign = search[i].split('=')[1];
+          shareBackCount(sign);
+          break;
+        }
       }
 
       /**
@@ -1309,26 +1319,26 @@
           + '&title=' + data.title 
           + '&sign=' + data.sign 
           + '&description=' + data.description;
+        i.style.height = '0';
+        i.style.opacity = 0;
+        document.body.appendChild(i);
       }
 
       // 分享回流统计
       function shareBackCount (sign) {
-          var i = document.createElement("img");
-          i.src = "https://www.itouzi.com/share/back?sign=" + sign;
+        var i = document.createElement("img");
+        i.src = "https://www.itouzi.com/share/back?sign=" + sign;
+        i.style.height = '0';
+        i.style.opacity = 0;
+        document.body.appendChild(i);
       }
 
-      //生成唯一标示
+      // 生成唯一标示
       function guid () {
         function S4() {
           return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
         }
         return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-      }
-
-      // 记录
-      var record = function (name) {
-        var url = "/newwap/ajax/savereportshare";
-        $.post(url, { share_platform_to: name })
       }
 
       // app分享
@@ -1374,7 +1384,12 @@
             link: link,
             imgUrl: imgUrl,
             success: function () {
-              record('WechatTimeline');
+              shareCount('WechatTimeline', {
+                url: link,
+                title: title,
+                sign: sign,
+                description: desc
+              });
             }
           })
 
@@ -1385,7 +1400,12 @@
             link: link,
             imgUrl: imgUrl,
             success: function () {
-              record('WechatSession');
+              shareCount('WechatSession', {
+                url: link,
+                title: title,
+                sign: sign,
+                description: desc
+              });
             }
           })
 
@@ -1396,7 +1416,12 @@
             link: link,
             imgUrl: imgUrl,
             success: function () {
-              record('QQ');
+              shareCount('QQ', {
+                url: link,
+                title: title,
+                sign: sign,
+                description: desc
+              });
             }
           })
 
@@ -1407,7 +1432,12 @@
             link: link,
             imgUrl: imgUrl,
             success: function () {
-              record('QZone');
+              shareCount('QZone', {
+                url: link,
+                title: title,
+                sign: sign,
+                description: desc
+              });
             }
           })
         })
