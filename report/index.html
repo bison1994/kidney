@@ -4,12 +4,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>爱投资2017上半年年报</title>
-	<link rel="stylesheet" type="text/css" href="/kidney/report/main_aad2eda.css">
+	<link rel="stylesheet" type="text/css" href="/kidney/report/main_98babd5.css">
   <script>
     // 屏幕宽度大于一定值，跳转到 PC 版
 
-    // 设置 rem
     (function() {
+      // 设置 rem
       var html = document.documentElement;
       var w = html.getBoundingClientRect().width;
       if (w >= 400) {
@@ -18,12 +18,18 @@
       if (w <= 350) {
         html.style.fontSize = '12px';
       }
+
+      // 加载完成后显示内容
+      window.onload = function () {
+        document.getElementById('app').style.display = "block";
+      }
     })();
   </script>
 </head>
-<body ontouchstart="">
+<body ontouchstart="" >
 
-	<div class="holder" flex>
+  <div id="app" class="app" style="display: none;">
+  	<div class="holder" flex id="0" flag="0">
 	<div class="hd pt60 js-index-0 drop-down" status="0">
 		<img src="/kidney/report/assets/logo.png" class="logo">
 		<h1 class="pt15">2017 爱投资上半年年报</h1>
@@ -78,7 +84,7 @@
 	</div>
 	<div class="ft ft-5x js-index-0"></div>
 </div>
-	<div class="holder pt10" flex>
+  	<div class="holder pt10" flex>
 	<div class="hd hd-1-2 js-index-1 pt40" status="-1">
 		<div class="hd-wrap">
 			<h2>平台累计数据</h2>
@@ -193,7 +199,7 @@
 	
 	<div class="ft ft-3x js-index-2"></div>
 </div>
-	<div class="holder" flex>
+  	<div class="holder" flex>
 	<div class="hd hd-3-4 js-index-3 pt15" status="-1">
 		<div class="hd-wrap">
 			<p>2017年上半年</p>
@@ -406,7 +412,7 @@
 	</div>
 	<div class="ft ft-2x js-index-4"></div>
 </div>
-	<div class="holder pt20" flex>
+  	<div class="holder pt20" flex>
   <div class="hd hd-5 js-index-5 pt55" status="-1">
   	<div class="hd-wrap">
 	    <p>2017年上半年，爱投资用户复投率高达97.04%</p>
@@ -457,7 +463,7 @@
 
   <div class="ft ft-4x js-index-5" status="-1"></div>
 </div>
-	<div class="holder pt20" flex>
+  	<div class="holder pt20" flex>
 	<div class="hd hd-6-7 js-index-6 pt60" status="-1">
 		<h2 class="hd-wrap">2017年上半年爱亲之“最”</h2>
 	</div>
@@ -590,7 +596,7 @@
 	</div>
 	<div class="ft ft-2x js-index-7"></div>
 </div>
-	<div class="holder pt20" flex>
+  	<div class="holder pt20" flex>
 	<div class="bd js-index-8" id="8" status="-1" flag="0" style="height: 87%">
 		<div class="card-paper animate-normal pb10" flex dir-col>
 			<div class="card-title gray f14 pt20">
@@ -665,7 +671,7 @@
 	</div>
 	<div class="ft ft-2x js-index-8"></div>
 </div>
-	<div class="holder" flex>
+  	<div class="holder" flex>
 	<div class="hd hd-9 js-index-9 pt30" status="-1">
 		<h2 class="hd-wrap">投资用户地域分布</h2>
 	</div>
@@ -766,7 +772,7 @@
 	</div>
 	<div class="ft ft-2x js-index-9"></div>
 </div>
-	<div class="holder pt10" flex>
+  	<div class="holder pt10" flex>
 	<div class="hd hd-10 js-index-10 light pt30" status="-1">
 		<div class="hd-wrap">
 			<p>2017 年上半年，爱投资共上线项目 930 个</p>
@@ -935,7 +941,7 @@
 	</div>
 	<div class="ft ft-2x js-index-11"></div>
 </div>
-	<div class="holder pt20" flex>
+  	<div class="holder pt20" flex>
 	<div class="hd hd-12 js-index-12 pt30 light" status="-1">
 		<div class="hd-wrap">
 			<h3>平台兑付情况：完美兑付</h3>
@@ -994,7 +1000,7 @@
 	</div>
 	<div class="ft ft-2x js-index-12"></div>
 </div>
-	<div class="holder" flex>
+  	<div class="holder" flex>
 	<div class="hd hd-13 js-index-13" status="-1">
 		<div class="hd-wrap page-13-hd">
 			<h3 class="tc">合规发展</h3>
@@ -1183,7 +1189,7 @@
 
 	<div class="ft ft-2x js-index-14"></div>
 </div>
-	<div class="holder" flex>
+  	<div class="holder" flex>
 	<div class="hd hd-15 js-index-15 pt15" status="-1">
 		<h3 class="hd-wrap">半年回顾</h3>
 	</div>
@@ -1274,7 +1280,7 @@
 	</div>
 	<div class="ft ft-x js-index-15"></div>
 </div>
-	<div class="holder" flex>
+  	<div class="holder" flex>
 	<div class="bd js-index-16" status="-1" id="16" data-loaded="0">
 		<div class="animate-normal">
 			<div class="tc pt40">
@@ -1292,11 +1298,12 @@
 	</div>
 </div>
 
-	<ul class="indicator">
-		<li></li>
-		<li></li>
-		<li></li>
-	</ul>
+  	<ul class="indicator">
+  		<li></li>
+  		<li></li>
+  		<li></li>
+  	</ul>
+  </div>
 
 	<script src="/kidney/report/main_65255f4.js"></script>
 	<!-- http://confluence.itouzi.com/pages/viewpage.action?pageId=13927074 -->
@@ -1333,7 +1340,7 @@
             return;
           }
         }
-
+        sign = guid();
       })();
 
       /**
@@ -1475,6 +1482,7 @@
           })
         })
       }
+      
     })()
   </script>
 </body>
