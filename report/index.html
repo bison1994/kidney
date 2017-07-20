@@ -12,12 +12,10 @@
     (function() {
       var html = document.documentElement;
       var w = html.getBoundingClientRect().width;
-      alert(w)
-      if (w > 400) {
+      if (w >= 400) {
         html.style.fontSize = '15px';
-      } else if (w <= 400 && w > 340) {
-        html.style.fontSize = '14px';
-      } else {
+      } 
+      if (w <= 350) {
         html.style.fontSize = '12px';
       }
     })();
