@@ -7,7 +7,10 @@
 	<link rel="stylesheet" type="text/css" href="/kidney/report/main_6ffb691.css">
   <script>
     // 屏幕宽度大于一定值，跳转到 PC 版
-
+    if (window.innerWidth > 980) {
+      location.href = '<{Yii::app()->c->baseUrl}>/home/publicity/report-201707'
+    }
+    
     (function() {
       // 设置 rem
       var html = document.documentElement;
@@ -1281,7 +1284,7 @@
 	<div class="ft ft-x js-index-15"></div>
 </div>
   	<div class="holder" flex>
-	<div class="bd js-index-16" status="-1" id="16" data-loaded="0">
+	<div class="bd js-index-16" status="0" id="16" data-loaded="0">
 		<div class="animate-normal">
 			<div class="tc pt40">
 				<img data-src="/kidney/report/assets/logo.png" class="logo">
@@ -1290,7 +1293,7 @@
 			<p class="closing-remark">　　感谢爱亲们的一路相伴，陪我们风雨同行，未来爱投资将在合规稳健运营中继续探索创新之路，不负投资者的信赖，提供更贴心周到的服务及更安全优质的产品来回报大家的厚爱与支持！</p>
 			
 			<div class="tc pt25">
-				<img data-src="/kidney/report/assets/qrcode.png" class="qrcode">
+				<img data-src="/kidney/report/assets/qrcode.png" class="qrcode" id="qrcode">
 			</div>
 
 			<button class="share-btn" id="share">立即分享</button>
@@ -1307,27 +1310,26 @@
 
 	<script src="/kidney/report/main_65255f4.js"></script>
 	<!-- http://confluence.itouzi.com/pages/viewpage.action?pageId=13927074 -->
-  <!-- <script src="/public/static_res/js/h5/app-bridge.js"></script> -->
+  <script src="<{Yii::app()->c->baseUrl}>/static_res/js/app-bridge.js"></script>
   <script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
   <script>
     (function () {
       var btn = document.getElementById('share');
+      var qrcode = document.getElementById('qrcode');
       var ua = navigator.userAgent;
+
       var url = window.location.href;
+      var text = "四年时间交易额300亿，理财首选！";
+      var imageUrl = "<{Yii::app()->c->baseUrl}>/static_res/semiannual-report-201707/thumb.jpg";
+      var platform = ['WechatTimeline', 'WechatSession', 'QQ', 'Qzone', 'Sina'];
+      var flag = "report201707";
+      var title = "爱投资2017上半年年报"
+      var description = "report201707";
       var sign = '';
                       
       // 判断机型，如果是iphone，转码；安卓不转
       if (ua.indexOf('iPhone') > -1) {
         url = encodeURIComponent(url);
-      }
-
-      // 绑定分享按钮事件
-      if (ua.toLowerCase().indexOf('micromessenger') > -1) {
-        btn.onclick = wxshare;
-      } else if (ua.indexOf('_ITZ_ANDROID') > -1 || ua.indexOf('_ITZ_IOS') > -1) {
-        btn.onclick = appshare;
-      } else {
-        btn.style.display = "none";
       }
 
       // 判断 url 中是否带有 sign 参数，如有则发送回流统计，如无，则生成 sign
@@ -1336,12 +1338,34 @@
         for (var i = 0; i < search.length; i++) {
           if (search[i].indexOf('sign') > -1) {
             sign = search[i].split('=')[1];
-            shareBackCount(sign);
+            if (sign) {
+              shareBackCount(sign);
+            }
             return;
           }
         }
         sign = guid();
       })();
+
+      // 绑定分享按钮事件
+      if (ua.toLowerCase().indexOf('micromessenger') > -1) {
+        bindBtnTouchEvent(btn);
+        btn.onclick = wxshare;
+      } else if (ua.indexOf('_ITZ_ANDROID') > -1 || ua.indexOf('_ITZ_IOS') > -1) {
+        bindBtnTouchEvent(btn);
+        btn.onclick = appshare;
+      } else {
+        btn.style.display = "none";
+      }
+
+      // 二维码
+      bindBtnTouchEvent(qrcode);
+
+      function bindBtnTouchEvent (el) {
+        el.addEventListener('touchstart', function (e) {
+          e.stopPropagation();
+        }, true)
+      }
 
       /**
        * 分享统计
@@ -1382,13 +1406,7 @@
       }
 
       // app分享
-      var text = "四年时间交易额300亿，理财首选！";
-      var imageUrl = "https://www.itouzi.com/static_res/semiannual-report-201707/thumb.jpg";
-      var platform = ['WechatTimeline', 'WechatSession', 'QQ', 'Qzone'];
-      var flag = "report201707";
-      var title = "爱投资2017上半年年报"
-      var description = "report201707";
-      var appshare = function () {
+      function appshare () {
         iTouziAPP.share(
           text,         // 内容描述
           imageUrl,     // 图片链接
@@ -1401,17 +1419,17 @@
       }
 
       // 微信分享接口
-      var wxshare = function () {
-        // 通过config接口注入权限验证配置
+      function wxshare () {
+        alert();
         wx.config({
+          debug : true,
           appId: '<{$appid}>',
           timestamp: '<{$timestamp}>',
           nonceStr: '<{$noncestr}>',
           signature: '<{$signature}>',
-          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo']
+          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone', 'onMenuShareWeibo']
         });
 
-        // 通过ready接口处理成功验证
         wx.ready(function () {
           var title = '爱投资2017上半年年报';
           var desc = '四年时间交易额300亿，理财首选！';
@@ -1480,9 +1498,29 @@
               });
             }
           })
+
+          // 分享到腾讯微博
+          wx.onMenuShareWeibo({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () { 
+               shareCount('TencentWeibo', {
+                url: link,
+                title: title,
+                sign: sign,
+                description: desc
+              });
+            }
+          })
+        })
+
+        wx.error(function (res) {
+          throw new Error(res)
         })
       }
-      
+
     })()
   </script>
 </body>
