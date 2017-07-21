@@ -3,30 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="description" content="四年时间交易额300亿，理财首选！">
 	<title>爱投资2017上半年年报</title>
-	<link rel="stylesheet" type="text/css" href="/kidney/report/main_25b8704.css">
+	<link rel="stylesheet" type="text/css" href="/kidney/report/main_75fa43d.css">
   <script>
     // 屏幕宽度大于一定值，跳转到 PC 版
     if (window.innerWidth > 980) {
       location.href = '<{Yii::app()->c->baseUrl}>/home/publicity/report-201707'
     }
-    
-    (function() {
-      // 设置 rem
-      var html = document.documentElement;
-      var w = html.getBoundingClientRect().width;
-      if (w >= 400) {
-        // html.style.fontSize = '15px';
-      }
-      if (w <= 350) {
-        html.style.fontSize = '12px';
-      }
 
-      // 加载完成后显示内容
-      window.onload = function () {
-        document.getElementById('app').style.display = "block";
-      }
-    })();
+    // 加载完成后显示内容
+    window.onload = function () {
+      document.getElementById('app').style.display = "block";
+    }
+    
   </script>
 </head>
 <body ontouchstart="" >
@@ -1449,7 +1439,7 @@
           wx.onMenuShareTimeline({
             title: title,
             link: link,
-            imgUrl: imgUrl,
+            imgUrl: imageUrl,
             success: function () {
               shareCount('WechatTimeline', data);
             }
@@ -1460,7 +1450,7 @@
             title: title,
             desc: desc,
             link: link,
-            imgUrl: imgUrl,
+            imgUrl: imageUrl,
             success: function () {
               shareCount('WechatSession', data);
             }
@@ -1471,7 +1461,7 @@
             title: title,
             desc: desc,
             link: link,
-            imgUrl: imgUrl,
+            imgUrl: imageUrl,
             success: function () {
               shareCount('QQ', data);
             }
@@ -1482,7 +1472,7 @@
             title: title,
             desc: desc,
             link: link,
-            imgUrl: imgUrl,
+            imgUrl: imageUrl,
             success: function () {
               shareCount('QZone', data);
             }
@@ -1493,7 +1483,7 @@
             title: title,
             desc: desc,
             link: link,
-            imgUrl: imgUrl,
+            imgUrl: imageUrl,
             success: function () { 
                shareCount('TencentWeibo', data);
             }
