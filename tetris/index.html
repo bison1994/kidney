@@ -1,379 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-	<script src="vue.min.js"></script>
-	<title>Vue-Tetris</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="vue.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./main.css">
+  <title>Vue-Tetris</title>
 </head>
-<style>
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-	html,
-	body {
-		height: 100%;
-	}
-	section {
-		width: 400px;
-		width: 50vh;
-		height: 80%;
-		background-color: #f2f2f2;
-		margin: 0 auto;
-		display: flex;
-		flex-wrap: wrap;
-	}
-	i {
-		display: inline-block;
-		width: 5%;
-		height: 3.125%;
-		border: 2px solid #f2f2f2;
-	}
-	.light {
-		background-color: #00695C;
-	}
-</style>
 <body>
-	<section id="app">
-		<i v-for="i in 640" :class="{'light': heap.indexOf(i) > -1 || block.indexOf(i) > -1}"></i>
-	</section>
+  
+  <div id="app">
+    <section>
+      <i v-for="i in 600" :class="{'light': heap.indexOf(i) > -1 || block.indexOf(i) > -1}"></i>
+    </section>
+    
+    <div class="control">
+      <div class="space" @click="control">{{ status ? 'pause' : 'begin' }}</div>
 
-	<script>
-		new Vue({
-			el: '#app',
-			data: {
-				heap: [],
-				block: [],
-				lock: false,
-				failed: false
-			},
-			mounted () {
-				this.generate();
-				this.dropDown();
-				this.handleKeyPress();
-				this.lock = true;
-			},
-			methods: {
-				generate () {
-					var i = Math.ceil(Math.random() * 19);
-					switch (i) {
-						case 1: 
-							this.block = this.vertiStick();
-							break;
-						case 2:
-							this.block = this.horiStick();
-							break;
-						case 3:
-							this.block = this.square();
-							break;
-						case 4:
-							this.block = this.top();
-							break;
-						case 5:
-							this.block = this.left();
-							break;
-						case 6:
-							this.block = this.right();
-							break;
-						case 7:
-							this.block = this.bottom();
-							break;
-						case 8:
-							this.block = this.z1();
-							break;
-						case 9:
-							this.block = this.z2();
-							break;
-						case 10:
-							this.block = this.z3();
-							break;
-						case 11:
-							this.block = this.z4();
-							break;
-						case 12:
-							this.block = this.L1();
-							break;
-						case 13:
-							this.block = this.L2();
-							break;
-						case 14:
-							this.block = this.L3();
-							break;
-						case 15:
-							this.block = this.L4();
-							break;
-						case 16:
-							this.block = this.L5();
-							break;
-						case 17:
-							this.block = this.L6();
-							break;
-						case 18:
-							this.block = this.L7();
-							break;
-						case 19:
-							this.block = this.L8();
-							break;
-					}
-				},
-				dropDown () {
-					var arr = this.block.map((val) => {
-						return val + 20;
-					});
-					if (Math.max.apply(null, this.block) > 620 || this.isContact(arr)) {
-						while (this.block.length) {
-							this.heap.push(this.block.pop())
-						}
-						return this.lock = false;
-					}
-					this.block = arr;
+      <div class="direction">
+        <span @click="rotate">up</span>
+        <div style="padding-top: 4px">
+          <span @click="moveLeft">left</span>
+          <span @click="moveDown">down</span>
+          <span @click="moveRight">right</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-					// 执行一次扫除程序
-					setTimeout(() => {
-						this.swipe();
-						this.dropDown();
-					}, 400);
-				},
-				// 查重
-				isContact (arr) {
-					for (var i = 0, len = arr.length; i < len; i++) {
-						if (this.heap.indexOf(arr[i]) > -1) {
-							// 执行一次溢出检测
-							this.isFailed();
-							return true
-						}
-					}
-				},
-				isFailed () {
-					// block停下来时，如果block数组存在小于20的数，则判定为失败
-					var arr = this.block;
-					for (var i = 0; i < arr.length; i++) {
-						if (arr[i] <= 20) {
-							setTimeout(() => {
-								alert('Game Over');
-								location.reload();
-							}, 0)
-							return this.failed = true;
-						}
-					}
-				},
-				swipe () {
-					var c = [];
-					var a;
-					for (var i = 0; i < 32; i++) {
-						for (var j = 1; j <= 20; j++) {
-							a = i * 20 + j;
-							if (this.heap.indexOf(a) > -1) {
-								c.push(a);
-							}
-						}
-						if (c.length == 20) {
-							// 消除
-							for (var k = 0; k < 20; k++) {
-								var index = this.heap.indexOf(c[k]);
-								this.heap.splice(index, 1);
-							}
-							this.heap = this.heap.map((val) => {
-								if (val <= i * 20) {
-									return val + 20;
-								} else {
-									return val;
-								}
-							});
-							console.log('消除了第' + i + '行')
-						}
-						c = [];
-					}
-				},
-				moveLeft () {
-					var arr = this.block.map((val) => {
-						return val - 1;
-					});
-					if (this.isContact(arr)) return;
-					// 不可超过左边界
-					var x;
-					for (var i = 0; i < arr.length; i++) {
-						x = Math.floor(arr[i] / 20);
-						if (arr[i] <= x * 20) return;
-					}
-					this.block = arr;
-				},
-				moveRight () {
-					var arr = this.block;
-					var y;
-					for (var i = 0; i < arr.length; i++) {
-						y = arr[i] / 20;
-						// y为整数，说明已抵达最右侧
-						if (y - Math.floor(y) == 0) return;
-					}
-					arr = this.block.map((val) => {
-						return val + 1;
-					});
-					if (this.isContact(arr)) return;
-					this.block = arr;
-				},
-				moveDown () {
-					if (Math.max.apply(null, this.block) >= 620) return;
-					var arr = this.block.map((val) => {
-						return val + 20;
-					});
-					if (this.isContact(arr)) return;
-					this.block = arr;
-				},
-				handleKeyPress () {
-					document.addEventListener('keydown', (event) => {
-						if (event.keyCode == 37) {
-							this.moveLeft();
-						}
-						if (event.keyCode == 39) {
-							this.moveRight();
-						}
-						if (event.keyCode == 40) {
-							this.moveDown();
-						}
-					})
-				},
-				vertiStick () {
-					var s = Math.ceil(Math.random() * 20);
-					return [s, s - 20, s - 40, s - 60]
-				},
-				horiStick () {
-					var s = Math.ceil(Math.random() * 16);
-					return [s, s + 1, s + 2, s + 3]
-				},
-				square () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s, s + 1, s - 20, s - 19]
-				},
-				/*
-					_|_
-				*/
-				top () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s, s + 1, s + 2, s - 19]
-				},
-				/*
-					__|
-					  |
-				*/
-				left () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s - 20, s - 19, s + 1, s - 39]
-				},
-				/*
-					|__
-					|
-				*/
-				right () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s, s - 19, s - 20, s - 40]
-				},
-				/* ___
-					  |
-				*/
-				bottom () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s - 20, s - 19, s - 18, s + 1]
-				},
-				/*__
-					  |__
-				*/
-				z1 () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s - 20,s - 19, s + 1, s + 2]
-				},
-				/*   __
-					__|
-				*/
-				z2 () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s, s + 1, s - 19, s - 18]
-				},
-				/* |__
-					    |
-				*/
-				z3 () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s - 20, s - 19, s + 1, s - 40]
-				},
-				/* __|
-					|
-				*/
-				z4 () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s, s - 20, s - 19, s - 39]
-				},
-				/*|
-					|__
-				*/
-				L1 () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s, s + 1, s - 20, s - 40]
-				},
-				/*  |
-					__|
-				*/
-				L2 () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s, s + 1, s - 19, s - 39]
-				},
-				/*__
-						|
-						|
-				*/
-				L3 () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s - 40, s - 39, s - 19, s + 1]
-				},
-				/* __
-					|
-					|
-				*/
-				L4 () {
-					var s = Math.ceil(Math.random() * 19);
-					return [s, s - 20, s - 40, s - 39]
-				},
-				/*
-					|___
-				*/
-				L5 () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s, s + 1, s + 2, s - 20]
-				},
-				/*
-					___|
-				*/
-				L6 () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s, s + 1, s + 2, s - 18]
-				},
-				/* ___
-						  |
-				*/
-				L7 () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s - 20, s - 19, s - 18, s + 2]
-				},
-				/* ___
-					|
-				*/
-				L8 () {
-					var s = Math.ceil(Math.random() * 18);
-					return [s, s - 20, s - 19, s - 18]
-				}
-			},
-			watch: {
-				'lock': function (val) {
-					if (!val && !this.failed) {
-						this.generate();
-						this.dropDown();
-						this.lock = true;
-					}
-				}
-			}
-		})
-	</script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        heap: [],
+        block: [],
+        rotateNext: '',
+        status: 0,  // 0 - pause | 1 - runing
+        total: 600,
+        timer: 0
+      },
+
+      mounted () {
+        this.init();
+      },
+
+      methods: {
+        init () {
+          this.bindKeyPress();
+        },
+
+        control () {
+          if (this.status === 0) {
+            this.status = 1;
+            this.timer = setInterval(() => {
+              if (this.block.length === 0) {
+                this.updateBlock();
+              }
+              this.moveDown();
+            }, 500)
+          } else {
+            this.status = 0;
+            clearInterval(this.timer)
+          }
+        },
+
+        moveLeft () {
+          var arr = this.block.map((val) => {
+            return val - 1;
+          });
+          if (this.willCollided(arr)) return;
+          // 不可超过左边界
+          if (arr.some(val => val % 20 === 0)) return;
+
+          this.block = arr;
+        },
+
+        moveRight () {
+          var arr = this.block.map((val) => {
+            return val + 1;
+          });
+          if (this.willCollided(arr)) return;
+          // 不可超过右边界
+          if (arr.some(val => val % 20 === 1)) return;
+          this.block = arr;
+        },
+
+        moveDown () {
+          var arr = this.block.map((val) => {
+            return val + 20;
+          });
+          // when block stops, check if failed or need swiping
+          if (Math.max.apply(null, this.block) > 580 || this.willCollided(arr)) {
+            if (this.checkFailed(this.block)) return;
+            this.heap = this.heap.concat(this.block);
+            this.block = [];
+            this.checkFullLine();
+            return;
+          }
+          // drop dowm block
+          this.block = arr
+        },
+
+        willCollided (arr) {
+          return arr.some(val => this.heap.indexOf(val) > -1)
+        },
+
+        checkFailed (block) {
+          // block 停下来时，如果 block 数组存在小于 20 的数，则判定为失败
+          for (var i = 0; i < 4; i++) {
+            if (block[i] <= 20) {
+              clearInterval(this.timer)
+              alert('Game Over');
+              location.reload();
+              return true
+            }
+          }
+        },
+
+        checkFullLine () {
+          var lines = [];
+          for (var i = 0; i < 30; i++) {
+            var continous = 0;
+            for (var j = 1; j <= 20; j++) {
+              var num = i * 20 + j;
+              if (this.heap.indexOf(num) < 0) break;
+              continous += 1;
+            }
+            if (continous === 20) {
+              lines.push(i);
+            }
+          }
+          // do swiping
+          this.swipe(lines)
+        },
+
+        // @lines { Array } 需要清除的行数
+        swipe (lines) {
+          if (lines.length === 0) return;
+          var copy = this.heap.slice(0);
+          copy = quickSort(copy, 0, copy.length - 1);
+          for (var i = 0; i < lines.length; i++) {
+            var start = lines[i] * 20 + 1;
+            var startIndex = copy.indexOf(start);
+            copy.splice(startIndex, 20);
+            copy = this.dropToFill(copy, startIndex)
+          }
+          this.heap = copy;
+        },
+
+        dropToFill (arr, length) {
+          for (var i = 0; i < length; i++) {
+            arr[i] += 20;
+          }
+          return arr
+        },
+
+        bindKeyPress () {
+          document.addEventListener('keydown', (event) => {
+            event.stopPropagation();
+            var code = event.keyCode;
+            if (code === 37) {
+              this.moveLeft();
+            }
+            if (code === 38) {
+              this.rotate()
+            }
+            if (code === 39) {
+              this.moveRight();
+            }
+            if (code === 40) {
+              this.moveDown();
+            }
+          })
+        },
+
+        rotate () {
+          var next = this.rotateNext;
+          var s = this.block[0];
+          if (this[next]) {
+            var arr = this[next](s);
+            if (this.willCollided(arr)) {
+              this.rotateNext = next;
+            } else {
+              this.block = arr;
+            }
+          }
+        },
+
+        fixOverflow (s) {
+          var mod = s % 20;
+          if (mod === 0) {
+            return s - 1
+          }
+          if (mod === 1) {
+            return s + 1
+          }
+          return s
+        },
+
+        vertiStick (s) {
+          this.rotateNext = 'horiStick';
+          return [s, s - 20, s - 40, s - 60]
+        },
+
+        horiStick (s) {
+          var mod = s % 20;
+          switch (mod) {
+            case 0:
+              s -= 3;
+              break;
+            case 19:
+              s -= 2;
+              break;
+            case 18:
+              s -= 1;
+          }
+          this.rotateNext = 'vertiStick';
+          return [s, s + 1, s + 2, s + 3]
+        },
+
+        square (s) {
+          this.rotateNext = '';
+          return [s, s + 1, s - 20, s - 19]
+        },
+        /*
+          _|_
+        */
+        top (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'right'
+          return [s, s + 1, s - 1, s - 20]
+        },
+        /*
+          |__
+          |
+        */
+        right (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'bottom'
+          return [s, s + 20, s - 20, s + 1]
+        },
+        /* ___
+            |
+        */
+        bottom (s) {
+          s = this.fixOverflow(s); 
+          this.rotateNext = 'left'
+          return [s, s - 1, s + 1, s + 20]
+        },
+        /*
+          __|
+            |
+        */
+        left (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'top'
+          return [s, s - 1, s - 20, s + 20]
+        },
+        /*__
+            |__
+        */
+        z1 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'z2'
+          return [s, s - 1, s + 20, s + 21]
+        },
+        /* __|
+          |
+        */
+        z2 (s) {
+          s = this.fixOverflow(s); 
+          this.rotateNext = 'z1'
+          return [s, s + 20, s + 1, s - 19]
+        },
+        /*   __
+          __|
+        */
+        z3 (s) {
+          s = this.fixOverflow(s); 
+          this.rotateNext = 'z4'
+          return [s, s + 1, s + 20, s + 19]
+        },
+        /* |__
+              |
+        */
+        z4 (s) {
+          s = this.fixOverflow(s); 
+          this.rotateNext = 'z3'
+          return [s, s + 1, s - 20, s + 21]
+        },
+        /*|
+          |__
+        */
+        L1 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L2'
+          return [s, s + 1, s - 20, s - 40]
+        },
+        /* ___
+          |
+        */
+        L2 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L3'
+          return [s, s - 1, s + 1, s + 19]
+        },
+        /*__
+            |
+            |
+        */
+        L3 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L4'
+          return [s, s - 1, s + 20, s + 40]
+        },
+        /*
+          ___|
+        */
+        L4 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L1'
+          return [s, s + 1, s - 1, s - 19]
+        },
+        /*  |
+          __|
+        */
+        L5 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L6'
+          return [s, s - 1, s - 20, s - 40]
+        },
+        /*
+          |___
+        */
+        L6 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L7'
+          return [s, s + 1, s - 1, s - 21]
+        },
+        /* __
+          |
+          |
+        */
+        L7 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L8'
+          return [s, s + 20, s + 40, s + 1]
+        },
+        /* ___
+              |
+        */
+        L8 (s) {
+          s = this.fixOverflow(s);
+          this.rotateNext = 'L5'
+          return [s, s - 1, s + 1, s + 21]
+        },
+
+        updateBlock () {
+          var i = Math.ceil(Math.random() * 19);
+          switch (i) {
+            case 1: 
+              this.block = this.vertiStick(10);
+              break;
+            case 2:
+              this.block = this.horiStick(10);
+              break;
+            case 3:
+              this.block = this.square(10);
+              break;
+            case 4:
+              this.block = this.top(10);
+              break;
+            case 5:
+              this.block = this.left(10);
+              break;
+            case 6:
+              this.block = this.right(10);
+              break;
+            case 7:
+              this.block = this.bottom(10);
+              break;
+            case 8:
+              this.block = this.z1(10);
+              break;
+            case 9:
+              this.block = this.z2(10);
+              break;
+            case 10:
+              this.block = this.z3(10);
+              break;
+            case 11:
+              this.block = this.z4(10);
+              break;
+            case 12:
+              this.block = this.L1(10);
+              break;
+            case 13:
+              this.block = this.L2(10);
+              break;
+            case 14:
+              this.block = this.L3(10);
+              break;
+            case 15:
+              this.block = this.L4(10);
+              break;
+            case 16:
+              this.block = this.L5(10);
+              break;
+            case 17:
+              this.block = this.L6(10);
+              break;
+            case 18:
+              this.block = this.L7(10);
+              break;
+            case 19:
+              this.block = this.L8(10);
+              break;
+          }
+        }
+      }
+    })
+
+    function quickSort (arr, lo, hi) {
+      if (lo >= hi) return;
+      var i = lo;
+      var j = hi;
+      var key = arr[lo];
+      while (true) {
+        while (j > i) {
+          if (arr[j] < key) {
+            arr[i] = arr[j];
+            arr[j] = key;
+            break;
+          }
+          j--
+        }
+        while (i < j) {
+          if (arr[i] > key) {
+            arr[j] = arr[i];
+            arr[i] = key;
+            break;
+          }
+          i++
+        }
+        if (i >= j) break;
+      }
+      quickSort(arr, lo, i - 1);
+      quickSort(arr, i + 1, hi);
+
+      return arr
+    }
+  </script>
 </body>
 </html>
