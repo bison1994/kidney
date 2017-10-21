@@ -1,0 +1,2 @@
+webpackJsonp([13],{M3my:function(e,t,n){"use strict";var r=function(){var e=this,t=e.$createElement;e._self._c;return e._m(0)},l=[function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("section",[n("h3",[e._v("组件设计原则")])])}],u={render:r,staticRenderFns:l};t.a=u},j8ph:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n("M3my"),l=n("46Yf"),u=l(null,r.a,!1,null,null,null);t.default=u.exports}});
+//# sourceMappingURL=13.b878c4795c15b4429c74.js.map
