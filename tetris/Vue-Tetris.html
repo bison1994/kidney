@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="./main.css">
+  <title>Vue-Tetris</title>
+  <script>
+    document.documentElement.setAttribute('style', 'font-size: ' + window.innerHeight / 10 + 'px')
+  </script>
+</head>
+<body>
+  
+  <div id="app" style="display: none">
+    <section>
+      <template v-for="(arr, i) in grid">
+        <i v-for="(val, j) in arr" :key="i * 10 + j" :class="{light: val === 1}"></i>
+      </template>
+    </section>
+    
+    <div class="controller">
+      <div class="space" @click="dropDown"></div>
+
+      <div class="direction">
+        <span @click="rotate">△</span>
+        <div class="second-row">
+          <span @click="translateX(-1)">◁</span>
+          <span @click="moveDown">▽</span>
+          <span @click="translateX(1)">▷</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="./vue.min.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>
