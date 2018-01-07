@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta charset="UTF-8">
+	<script src='http://libs.cdnjs.net/vue/2.0.3/vue.js'></script>
+	<title>Document</title>
+</head>
+<style>
+	* {
+		box-sizing: border-box;
+	}
+	html,
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+	}
+	header {
+		height: 50px;
+		border-bottom: 1px solid #ccc;
+		background-color: #f7f7f7;
+		text-align: center;
+		line-height: 50px;
+		font-size: 16px;
+		box-sizing: border-box;
+	}
+	article {
+		height: calc(100% - 50px);
+		overflow-y: auto;
+		-webkit-overflow-scrolling : touch;
+		background-color: #efefef;
+	}
+	section {
+		background-color: #fff;
+		position: relative;
+	}
+	ul {
+		list-style: none;
+		padding: 20px 0 0;
+		margin: 0;
+		width: 100%;
+		position: relative;
+	}
+	li {
+		display: block;
+		height: 120px;
+		line-height: 120px;
+		text-align: center;
+		font-size: 36px;
+		font-weight: bold;
+		color: #eee;
+		border-bottom: 1px solid #eee;
+	}
+	nav {
+		width: 100%;
+		height: 20px;
+		line-height: 20px;
+		font-size: 13px;
+		padding-left: 10px;
+		border-bottom: 1px solid #eee;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-color: #fff;
+	}
+	.trans {
+		transition: all .3s;
+	}
+	.fixed {
+		position: fixed;
+		top: 50px;
+	}
+	.bottom {
+		bottom: 0;
+		top: auto;
+	}
+</style>
+<body>
+	<header>发现</header>
+	<article id="app" @scroll="scroller">
+		<section v-touch="bindTouchHandler"
+			:style="{ top: offsetY + 'px' }"
+			:class="{ 'trans': loosed }">
+			<ul v-for="val in list" v-listen="scrolling">
+				<nav>#{{ val.nav }}</nav>
+				<li v-for="(item, i) in val.child">{{ i }}</li>
+			</ul>
+		</section>
+	</article>
+
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				list: [
+					{ nav: '分类一', child: [, , , , ,] },
+					{ nav: '分类二', child: [, , , , ,] },
+					{ nav: '分类三', child: [, , , , ,] },
+					{ nav: '分类四', child: [, , , , ,] },
+					{ nav: '分类五', child: [, , , , ,] }
+				],
+				scrolling: '',
+				scrollTarget: null,
+				loosed: false,
+				startY: 0,
+				offsetY: 0,
+			},
+			directives: {
+				'touch': {
+					isFn: true, 
+					bind: (el, binding) => {
+						binding.value(el);
+					}
+				},
+				'listen': {
+					bind: () => {
+						return
+					},
+					update: (el, binding) => {
+						var top = el.getBoundingClientRect().top;
+						var bottom = el.getBoundingClientRect().bottom;
+						if (top > 50) {
+							el.querySelector('nav').setAttribute('class', '');
+							return;
+						}
+						if (bottom < 70) {
+							el.querySelector('nav').setAttribute('class', 'bottom');
+							return;
+						}
+						if (top <= 50 && bottom >= 70) {
+							el.querySelector('nav').setAttribute('class', 'fixed');
+							return;
+						}
+					}
+				}
+			},
+			methods: {
+				bindTouchHandler (el) {
+					el.addEventListener('touchstart', this.handleTouchstart);
+					el.addEventListener('touchmove', this.handleTouchmove);
+					el.addEventListener('touchend', this.handleTouchend);
+					this.scrollTarget = el;
+				},
+				handleTouchstart (event) {
+					this.loosed = false;
+					this.startY = event.touches[0].clientY;
+				},
+				handleTouchmove (event) {
+					if (this.attachedTop() || this.attachedBottom()) {
+						this.offsetY = (event.touches[0].clientY - this.startY) * .618;
+					}
+				},
+				handleTouchend (event) {
+					this.loosed = true;
+					this.offsetY = 0;
+				},
+				attachedTop () {
+					if (this.scrollTarget.getBoundingClientRect().top >= 50) {
+						return true
+					}
+				},
+				attachedBottom () {
+					if (this.scrollTarget.getBoundingClientRect().bottom <= window.innerHeight + 2) {
+						return true
+					}
+				},
+				scroller () {
+					this.scrolling = this.scrollTarget.getBoundingClientRect().top;
+				}
+			}
+		})
+	</script>
+</body>
+</html>
